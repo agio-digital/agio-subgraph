@@ -3,14 +3,20 @@
   "license": "UNLICENSED",
   "scripts": {
     "codegen": "graph codegen",
+    "prebuild": "yarn compile && yarn codegen",
     "build": "graph build",
-    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ agio-digital/agio-subgraph",
-    "create-local": "graph create --node http://localhost:8020/ agio-digital/agio-subgraph",
-    "remove-local": "graph remove --node http://localhost:8020/ agio-digital/agio-subgraph",
-    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 agio-digital/agio-subgraph"
+    "compile": "npx graph-compiler --config config.json --include ./node_modules/@openzeppelin/subgraphs/src/datasources --export-schema --export-subgraph",
+    "patch-yaml": "node patch-yaml",
+    "postcompile": "yarn patch-yaml",
+    "deploy": "graph deploy --node https://api.thegraph.com/deploy/ agio-digital/agio",
+    "create-local": "graph create --node http://localhost:8020/ agio-digital/agio",
+    "remove-local": "graph remove --node http://localhost:8020/ agio-digital/agio",
+    "deploy-local": "graph deploy --node http://localhost:8020/ --ipfs http://localhost:5001 agio-digital/agio"
   },
   "dependencies": {
     "@graphprotocol/graph-cli": "0.29.0",
-    "@graphprotocol/graph-ts": "0.26.0"
+    "@graphprotocol/graph-ts": "0.26.0",
+    "@openzeppelin/contracts": "^4.5.0",
+    "@openzeppelin/subgraphs": "^0.1.7-1"
   }
 }

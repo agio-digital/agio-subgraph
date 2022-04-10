@@ -1,29 +1,23 @@
-specVersion: 0.0.1
+specVersion: 0.0.2
 schema:
-  file: ./schema.graphql
+  file: schema.graphql
 dataSources:
-  - kind: ethereum
-    name: AgioSMARTDAO
+  - kind: ethereum/contract
+    name: governor
     network: mumbai
     source:
-      address: "0xbf9fBFf01664500A33080Da5d437028b07DFcC55"
-      abi: AgioSMARTDAO
+      address: "0xCe2302b0EDa1Ad89939c583895D018D0c37f5D9D"
+      abi: Governor
+      startBlock: 11633151
     mapping:
       kind: ethereum/events
       apiVersion: 0.0.5
       language: wasm/assemblyscript
       entities:
-        - ProposalCanceled
-        - ProposalCreated
-        - ProposalExecuted
-        - ProposalThresholdSet
-        - QuorumNumeratorUpdated
-        - VoteCast
-        - VotingDelaySet
-        - VotingPeriodSet
+        - Governor
       abis:
-        - name: AgioSMARTDAO
-          file: ./abis/AgioSMARTDAO.json
+        - name: Governor
+          file: ./node_modules/@openzeppelin/contracts/build/contracts/IGovernorTimelock.json
       eventHandlers:
         - event: ProposalCanceled(uint256)
           handler: handleProposalCanceled
@@ -31,14 +25,8 @@ dataSources:
           handler: handleProposalCreated
         - event: ProposalExecuted(uint256)
           handler: handleProposalExecuted
-        - event: ProposalThresholdSet(uint256,uint256)
-          handler: handleProposalThresholdSet
-        - event: QuorumNumeratorUpdated(uint256,uint256)
-          handler: handleQuorumNumeratorUpdated
+        - event: ProposalQueued(uint256,uint256)
+          handler: handleProposalQueued
         - event: VoteCast(indexed address,uint256,uint8,uint256,string)
           handler: handleVoteCast
-        - event: VotingDelaySet(uint256,uint256)
-          handler: handleVotingDelaySet
-        - event: VotingPeriodSet(uint256,uint256)
-          handler: handleVotingPeriodSet
-      file: ./src/mapping.ts
+      file: node_modules/@openzeppelin/subgraphs/src/datasources/governor.ts

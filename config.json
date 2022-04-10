@@ -1,0 +1,7 @@
+{
+  "output": "./",
+  "chain": "mumbai",
+  "datasources": [
+    { "address": "0xCe2302b0EDa1Ad89939c583895D018D0c37f5D9D", "startBlock": 11633151, "module": [ "governor" ] }
+  ]
+}
